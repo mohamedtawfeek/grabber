@@ -267,6 +267,7 @@
             this.$loading.fadeOut();
         },
         cropDone: function () {
+            $('.imgValue').val(this.url);
             this.$avatarForm.get(0).reset();
             this.$avatar.attr('src', this.url);
             this.stopCropper();
@@ -292,6 +293,7 @@ $(document).ready(function () {
     $('#cropbutton').click(function () {
         $('#crop').show(500);
         $('#cropbutton').hide(500);
+
         var selection = $('#photo').imgAreaSelect({
             aspectRatio: '1.2:1',
             handles: true,
@@ -321,16 +323,17 @@ $(document).ready(function () {
                         loader.show();
                     }
                 }).done(function (msg) {
+                    $('.imgValue').val(msg);
                     image.attr("src", msg);
                     $('#crop').hide(500);
-                    $('#cropbutton').show(500);
+                    $('#cropbutton').remove();
                     loader.hide();
                     selection.cancelSelection();
                     $('#photo').imgAreaSelect({
                         remove: true
                     });
                 });
-            } 
+            }
         });
     });
 
@@ -352,15 +355,15 @@ $(document).ready(function () {
                 loader2.hide();
                 if (!data[0]) {
                     $('.titlebtn').show(500);
+
                 } else {
                     $(".title").html(data[0]);
-                    $('.titlebtn').html('Change Title');
                 }
                 if (!data[1]) {
                     $('.descbutton').show(500);
+
                 } else {
                     $(".desc").html(data[1]);
-                    $('.descbutton').html('Change Descrption');
                 }
 
                 if (!data[2]) {
@@ -372,6 +375,8 @@ $(document).ready(function () {
                 } else {
                     $('#cropbutton').show(500);
                     $('#crop').hide(500);
+                    $('.imgValue').val('img/' + data[2]);
+
                     image.attr("src", 'img/' + data[2]);
                 }
 

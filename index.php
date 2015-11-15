@@ -24,27 +24,46 @@
                 <input type="text" name="webUrl" value="http://"/>
                 <input type="submit" name="submit" value="Done" />
             </form>
-            <!-- Title Output -->
-            <h4 class="title"></h4>
-            <!-- Descrption Output -->
-            <p class="desc"></p>
-
-
+            <?php
+            ?>
             <!-- Current avatar -->
             <div class="theView" style="display:none">
-                <div class="avatar-view">
-                    <img src="img/" alt="" id="photo">
-                </div>
-                <button class="titlebtn" value="Add Title">Add Title</button>
+                <!-- Title Output -->
+                <form action="index.php" method="post">
+                    <label>title</label><textarea name="titleValue" class="title form-control"></textarea>
+                    <!-- Descrption Output -->
+                    <label>description</label><textarea name="descValue" class="desc form-control"></textarea>
+                    <!-- image output -->
+                    <input class="imgValue" name="imgValue" type="hidden" value="" />
 
-                <button class="descbutton" value="Add Descrption">Add Descrption</button>
+
+                    <div class="avatar-view">
+                        <img src="img/" alt="" id="photo">
+                    </div>
+                    <input type="submit" name="submit" value="Done" />
+
+                </form>
+                <?php
+                $str = filter_input(INPUT_POST, 'imgValue');
+
+                if (isset($str)) {
+                    $re = "/(.+)[\\/](.+)[.](jpg|gif|png)/";
+                    preg_match($re, $str, $matches);
+                    if (dirname($str) == 'img') {
+                        copy($str, 'output/' . $matches[2] . '.' . $matches[3]);
+                        unlink($_POST['imgValue']);
+                    }
+                }
+                ?>
+                <button class="title-change" style="display: none">Change title</button>
+                <button class="desc-change" style="display: none">Change desc</button>
 
                 <button class="avatar-view2" value="Change Image">Change Image</button>
                 <input type="button" id="cropbutton" value="Start Crop">
                 <input type="button" id="crop" class="" value="Crop" style="display:none">
 
             </div>
-            <img src="img/loading.gif" id="ajax-loader" style="display:none"> 
+            <img src="loading.gif" id="ajax-loader" style="display:none"> 
             <!-- Cropping modal -->
             <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
                 <div class="modal-dialog modal-lg">
@@ -90,6 +109,7 @@
                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div> -->
                         </form>
+
                     </div>
                 </div>
             </div><!-- /.modal -->

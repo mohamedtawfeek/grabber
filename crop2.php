@@ -82,17 +82,25 @@ class crop {
         imagesavealpha($dst_img, true);
 
         $result = imagecopyresampled($dst_img, $src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
-        $result2 = imagejpeg($dst_img, 'img/thumb' . date('YmdHis') . '.jpeg', 200);
+        $result2 = imagejpeg($dst_img, 'img/output/thumb' . date('YmdHis') . '.jpeg', 200);
         imagedestroy($dst_img);
 
-        return 'img/thumb' . date('YmdHis') . '.jpeg';
+        return 'img/output/thumb' . date('YmdHis') . '.jpeg';
     }
 
 }
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) {
 
-$crop = new crop();
-$imageSrc = $crop->cropThis();
-echo $imageSrc;
+if (dirname($_GET["image"]) == 'output') {
+    echo $_GET["image"];
+} else {
+    $crop = new crop();
+    $imageSrc = $crop->cropThis();
+    echo $imageSrc;
 //delete natural image 
-unlink($_GET["image"]);
+    unlink($_GET["image"]);
 
+}
+}else{
+    echo 'you cannot access this file';
+}

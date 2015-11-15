@@ -43,7 +43,7 @@ class CropAvatar {
 
             if ($type) {
                 $extension = image_type_to_extension($type);
-                $src = 'img/' . date('YmdHis') . '.original' . $extension;
+                $src = 'output/' . date('YmdHis') . '.original' . $extension;
 
                 if ($type == IMAGETYPE_GIF || $type == IMAGETYPE_JPEG || $type == IMAGETYPE_PNG) {
 
@@ -73,9 +73,8 @@ class CropAvatar {
     }
 
     private function setDst() {
-        $this->dst = 'img/' . date('YmdHis') . '.png';
+        $this->dst = 'img/output/' . date('YmdHis') . '.png';
     }
-
 
     private function crop($src, $dst, $data) {
         if (!empty($src) && !empty($dst) && !empty($data)) {
@@ -207,12 +206,12 @@ class CropAvatar {
         return !empty($this->data) ? $this->dst : $this->src;
     }
 
-
     public function getMsg() {
         return $this->msg;
     }
 
 }
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) {
 
 $crop = new CropAvatar(
         isset($_POST['avatar_src']) ? $_POST['avatar_src'] : null, isset($_POST['avatar_data']) ? $_POST['avatar_data'] : null, isset($_FILES['avatar_file']) ? $_FILES['avatar_file'] : null
@@ -224,3 +223,7 @@ $response = array(
     'result' => $crop->getResult()
 );
 echo json_encode($response);
+
+}else{
+    echo 'you cannot access this file'; 
+}

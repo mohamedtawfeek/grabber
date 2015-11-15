@@ -16,8 +16,14 @@ class grabber {
         $link = filter_input(INPUT_POST, 'webUrl', FILTER_VALIDATE_URL);
         if (!empty($link)) {
             //get link contents
-            $contents = htmlentities(file_get_contents($link)); //get page
-            $content = html_entity_decode($contents); //decode page
+            $ch = curl_init($link);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $content = html_entity_decode($output); //decode page
             return $content; //return decoded entites
         }
     }
@@ -93,7 +99,7 @@ class grabber {
                                 curl_setopt($process, CURLOPT_HEADER, 0);
                                 curl_setopt($process, CURLOPT_TIMEOUT, 30);
                                 curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
-                                curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
+                                curl_setopt($process, CURLOPT_FOLLOWLOCATION, true);
                                 $return = curl_exec($process);
                                 curl_close($process);
                                 $image = $return;
@@ -110,12 +116,17 @@ class grabber {
 
 }
 
-$grabber = new grabber();
-$desc = $grabber->getDescription();
-$descrption = strip_tags($desc[0][1]);
-$title1 = $grabber->getTitle();
-$title = strip_tags($title1[6]);
-$image = $grabber->imgResult();
-$result = array($title, $descrption, $image);
-echo json_encode($result);
-?>
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) {
+    $grabber = new grabber();
+    $desc = $grabber->getDescription();
+    $descrption = strip_tags($desc[0][1]);
+    $title1 = $grabber->getTitle();
+    $title = strip_tags($title1[6]);
+    $image = $grabber->imgResult();
+    $result = array($title, $descrption, $image);
+    echo json_encode($result);
+} else {
+    die('nothing here');
+}
+
+
