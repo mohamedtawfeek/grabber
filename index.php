@@ -40,6 +40,12 @@
                     <div class="avatar-view">
                         <img src="img/" alt="" id="photo">
                     </div>
+
+
+
+                    <button class="avatar-view2" value="Change Image">Change Image</button>
+                    <input type="button" id="cropbutton" value="Start Crop">
+                    <input type="button" id="crop" class="" value="Crop" style="display:none">
                     <input type="submit" name="submit" value="Done" />
 
                 </form>
@@ -55,13 +61,6 @@
                     }
                 }
                 ?>
-                <button class="title-change" style="display: none">Change title</button>
-                <button class="desc-change" style="display: none">Change desc</button>
-
-                <button class="avatar-view2" value="Change Image">Change Image</button>
-                <input type="button" id="cropbutton" value="Start Crop">
-                <input type="button" id="crop" class="" value="Crop" style="display:none">
-
             </div>
             <img src="loading.gif" id="ajax-loader" style="display:none"> 
             <!-- Cropping modal -->
