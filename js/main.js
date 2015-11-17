@@ -288,19 +288,15 @@
     });
 });
 $(document).ready(function () {
-
-
     $('#cropbutton').click(function () {
         $('#crop').show(500);
         $('#cropbutton').hide(500);
-
         var selection = $('#photo').imgAreaSelect({
             aspectRatio: '1.2:1',
             handles: true,
             instance: true,
             x1: 50, y1: 40, x2: 320, y2: 280
         });
-
         $("#crop").click(function () {
             var width = selection.getSelection().width;
             var height = selection.getSelection().height;
@@ -337,54 +333,64 @@ $(document).ready(function () {
         });
     });
 
-    $(".js-ajax-php-json").submit(function () {
-        var loader2 = $("#ajax-loader");
-        var image = $("#photo");
 
-        var data = $(this).serialize();
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "grabber.php", //Relative or absolute path to response.php file
-            data: data,
-            beforeSend: function () {
-                loader2.show();
-            },
-            success: function (data) {
-                $('.theView').show();
-                loader2.hide();
-                if (!data[0]) {
-                    $('.titlebtn').show(500);
+    $('.web').change(function () {
 
-                } else {
-                    $(".title").html(data[0]);
-                }
-                if (!data[1]) {
-                    $('.descbutton').show(500);
+        var newUrl;
+        var url = $('.web').val();
+        $(".js-ajax-php-json").submit(function () {
 
-                } else {
-                    $(".desc").html(data[1]);
-                }
+            if (url !== newUrl) {
+                newUrl = url;
 
-                if (!data[2]) {
-                    $('#cropbutton').hide();
+                var loader2 = $("#ajax-loader");
+                var image = $("#photo");
+                var data = $(this).serialize();
 
-                    $('.avatar-view').hide();
-                    $('#crop').hide();
-                    $('.avatar-view2').html('Add Image');
-                } else {
-                    $('#cropbutton').show(500);
-                    $('#crop').hide(500);
-                    $('.imgValue').val('img/' + data[2]);
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "grabber.php", //Relative or absolute path to response.php file
+                    data: data,
+                    beforeSend: function () {
+                        loader2.show();
+                    },
+                    success: function (data) {
+                        $('.theView').show();
+                        loader2.hide();
+                        if (!data[0]) {
+                            $('.titlebtn').show(500);
+                        } else {
+                            $(".title").html(data[0]);
+                        }
+                        if (!data[1]) {
+                            $('.descbutton').show(500);
+                        } else {
+                            $(".desc").html(data[1]);
+                        }
 
-                    image.attr("src", 'img/' + data[2]);
-                }
+                        if (!data[2]) {
+                            $('#cropbutton').hide();
+                            $('.avatar-view').hide();
+                            $('#crop').hide();
+                            $('.avatar-view2').html('Add Image');
+                        } else {
+                            $('#cropbutton').show(500);
+                            $('#crop').hide(500);
+                            $('.imgValue').val('img/' + data[2]);
+                            image.attr("src", 'img/' + data[2]);
+                        }
 
+                    }
+                });
+                return false;
+            } else {
+                event.preventDefault();
             }
         });
-        return false;
     });
 });
+
 
 
 

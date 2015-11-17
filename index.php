@@ -20,9 +20,9 @@
     <body>
         <div class="container" id="crop-avatar">
             <!-- Url Form -->
-            <form action="grabber.php" id="myform" class="js-ajax-php-json" method="post" accept-charset="utf-8">
-                <input type="text" name="webUrl" value="http://"/>
-                <input type="submit" name="submit" value="Done" />
+            <form  name="myForm" action="grabber.php"  id="myform" class="js-ajax-php-json" method="post" accept-charset="utf-8">
+                <input type="url" name="webUrl" class="web" value="http://" required autofocus />
+                <input type="submit" name="submit" class="urlSubmit" value="Done" />
             </form>
             <?php
             ?>
@@ -116,9 +116,11 @@
             <!-- Loading state -->
             <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
         </div>
+
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/cropper.min.js"></script>
+   
         <script src="js/main.js"></script>
         <script src="js/jquery.imgareaselect.pack.js" type="text/javascript"></script>
     </body>
