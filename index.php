@@ -24,8 +24,8 @@
                 <input type="url" name="webUrl" class="web" value="http://" required autofocus />
                 <input type="submit" name="submit" class="urlSubmit" value="Done" />
             </form>
-   
-         
+
+
             <!-- Current avatar -->
             <div class="theView" style="display:none">
                 <!-- Title Output -->
@@ -43,12 +43,13 @@
 
 
 
-                    <button class="avatar-view2" value="Change Image">Change Image</button>
                     <input type="button" id="cropbutton" value="Start Crop">
                     <input type="button" id="crop" class="" value="Crop" style="display:none">
                     <input type="submit" name="submit" value="Done" />
 
                 </form>
+                <button class="avatar-view2" value="Change Image">Change Image</button>
+
                 <?php
                 $str = filter_input(INPUT_POST, 'imgValue');
 

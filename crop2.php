@@ -82,7 +82,7 @@ class crop {
         imagesavealpha($dst_img, true);
 
         $result = imagecopyresampled($dst_img, $src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
-        $result2 = imagejpeg($dst_img, 'img/output/thumb' . date('YmdHis') . '.jpeg', 200);
+        $result2 = imagejpeg($dst_img, 'output/thumb' . date('YmdHis') . '.jpeg', 200);
         imagedestroy($dst_img);
 
         return 'output/thumb' . date('YmdHis') . '.jpeg';

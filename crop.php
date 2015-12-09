@@ -73,7 +73,7 @@ class CropAvatar {
     }
 
     private function setDst() {
-        $this->dst = 'img/output/' . date('YmdHis') . '.png';
+        $this->dst = 'output/' . date('YmdHis') . '.png';
     }
 
     private function crop($src, $dst, $data) {
