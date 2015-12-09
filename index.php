@@ -24,8 +24,8 @@
                 <input type="url" name="webUrl" class="web" value="http://" required autofocus />
                 <input type="submit" name="submit" class="urlSubmit" value="Done" />
             </form>
-            <?php
-            ?>
+   
+         
             <!-- Current avatar -->
             <div class="theView" style="display:none">
                 <!-- Title Output -->
@@ -120,7 +120,6 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/cropper.min.js"></script>
-   
         <script src="js/main.js"></script>
         <script src="js/jquery.imgareaselect.pack.js" type="text/javascript"></script>
     </body>

@@ -49,10 +49,15 @@ class grabber {
             //trim spaces
 
             $content = trim(preg_replace('/\s+/', ' ', $this->grabLink())); // supports line breaks inside <p>
+            //getting meta descrption tag
+            preg_match("/(<meta)(\\s+)?(name=\"description\")(\\s+)?(content=\")((.+){50,})(\")(\\s+)?(>|\\/>)/Uim", $content, $subject);
             //get first <p> tag
-            preg_match_all("/(<)(p)(\\s+)?([a-z]+)?([=][\"].+[\"])?([a-z])?([=][\"].+[\"])?\\s?\\>(.{150,})(<\\/)(p)(>)/Uim", $content, $ecp); // ignore case
-            if ($ecp) {
-                return $ecp;
+            preg_match_all("/(<)(p)(\\s+)?([a-z]+)?([=][\"].+[\"])?([a-z])?([=][\"].+[\"])?\\s?\\>(.{150,})(<\\/)(p)(>)/Uim", $content, $ecp); 
+            $subjectLen = strlen($subject[6]); 
+            if ($subjectLen > 80 ) {
+                return $subject[6];
+            }elseif($ecp){
+                return $ecp[8][1]; 
             } else {
                 echo 'Nothing';
             }
@@ -119,11 +124,11 @@ class grabber {
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) {
     $grabber = new grabber();
     $desc = $grabber->getDescription();
-    $descrption = strip_tags($desc[0][1]);
+    $descrption = strip_tags($desc);
     $title1 = $grabber->getTitle();
     $title = strip_tags($title1[6]);
     $image = $grabber->imgResult();
-    $result = array($title, $descrption, $image);
+    $result = array($title, $desc, $image);
     echo json_encode($result);
 } else {
     die('nothing here');
