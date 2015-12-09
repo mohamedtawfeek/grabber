@@ -85,7 +85,7 @@ class crop {
         $result2 = imagejpeg($dst_img, 'img/output/thumb' . date('YmdHis') . '.jpeg', 200);
         imagedestroy($dst_img);
 
-        return 'img/output/thumb' . date('YmdHis') . '.jpeg';
+        return 'output/thumb' . date('YmdHis') . '.jpeg';
     }
 
 }
